@@ -26,20 +26,20 @@ class TestCpe < Test::Unit::TestCase
 
 	def test_generation
 		cpe = Cpe.new :part => Cpe::OS, :vendor => "microsoft", :product => "windows_xp", :edition => "pro"
-		assert_equal cpe.to_s, "cpe:/o:microsoft:windows_xp:::pro:"
+		assert_equal cpe.generate, "cpe:/o:microsoft:windows_xp:::pro:"
 
 		cpe = Cpe.new :part => Cpe::Application, :vendor => "ACME", :product => "Product", :version => "1.0", :update => "update2", :edition => "-", :language => "en-us"
-		assert_equal cpe.to_s, "cpe:/a:acme:product:1.0:update2:-:en-us"
+		assert_equal cpe.generate, "cpe:/a:acme:product:1.0:update2:-:en-us"
 
 		cpe = Cpe.new :part => Cpe::Hardware, :vendor => "cisco", :product => "router", :version => 3825
-		assert_equal cpe.to_s, "cpe:/h:cisco:router:3825:::"
+		assert_equal cpe.generate, "cpe:/h:cisco:router:3825:::"
 
 		assert_raises(ArgumentError) { Cpe.new :part => 2 }
 		assert_nothing_raised { Cpe.new }
 
-		assert_raises(KeyError) { Cpe.new.to_s }
-		assert_raises(KeyError) { Cpe.new(:part => Cpe::OS).to_s }
-		assert_raises(KeyError) { Cpe.new(:vendor => "redhat").to_s }
-		assert_nothing_raised { Cpe.new(:vendor => "redhat", :part => Cpe::OS).to_s }
+		assert_raises(KeyError) { Cpe.new.generate }
+		assert_raises(KeyError) { Cpe.new(:part => Cpe::OS).generate }
+		assert_raises(KeyError) { Cpe.new(:vendor => "redhat").generate }
+		assert_nothing_raised { Cpe.new(:vendor => "redhat", :part => Cpe::OS).generate }
 	end
 end

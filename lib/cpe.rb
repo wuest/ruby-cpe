@@ -14,13 +14,13 @@
 #
 #   cpe = Cpe.parse "cpe:/o:microsoft:windows_xp:::pro"
 #   cpe.vendor # => "microsoft"
-#   cpe.to_s # => "cpe:/o:microsoft:windows_xp:::pro:"
+#   cpe.generate # => "cpe:/o:microsoft:windows_xp:::pro:"
 #
 # === Generating CPE string
 #   cpe = Cpe.new :part => Cpe::OS
 #   cpe.vendor = "microsoft"
 #   cpe.product = "windows_xp"
-#   cpe.to_s # => "cpe:/o:microsoft:windows_xp::::"
+#   cpe.generate # => "cpe:/o:microsoft:windows_xp::::"
 class Cpe
 	# Part type.  Can be /o (Cpe::OS), /a (Cpe::Application), /h (Cpe::Hardware)
 	attr_accessor :part
@@ -56,10 +56,10 @@ class Cpe
 
 	# 
 	# Check that at least Part and one other piece of information have been
-	# collected, and generate CPE string.
+	# collected, and return generated CPE string.
 	#
-	def to_s
-		raise KeyError unless /\/[oah]/.match @part
+	def generate
+		raise KeyError unless /\/[oah]/.match @part 
 		raise KeyError if @vendor.to_s.empty? and @product.to_s.empty? and @version.to_s.empty? and @update.to_s.empty? and @edition.to_s.empty? and @language.to_s.empty?
 		return ["cpe", @part, @vendor, @product, @version, @update, @edition, @language].join(":").downcase
 	end
