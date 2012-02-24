@@ -15,11 +15,11 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "cpe"
-  gem.homepage = "http://github.com/cwuest/cpe"
+  gem.homepage = "http://github.com/cwuest/ruby-cpe"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "chris.wuest@rackspace.com"
+  gem.summary = %Q{Library for parsing and generating CPEs}
+  gem.description = %Q{Library for parsing and generating Common Platform Enumeration strings (see http://cpe.mitre.org/)}
+  gem.email = "chris@chriswuest.com"
   gem.authors = ["Chris Wuest"]
   # dependencies defined in Gemfile
 end
@@ -30,14 +30,6 @@ Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
   test.pattern = 'test/**/test_*.rb'
   test.verbose = true
-end
-
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
 end
 
 task :default => :test
