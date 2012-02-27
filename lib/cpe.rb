@@ -3,6 +3,19 @@
 #  Copyright (c) Chris Wuest <chris@chriswuest.com>
 #  Expectr is freely distributable under the terms of an MIT-style license.
 #  See LICENSE.txt or http://www.opensource.org/licenses/mit-license.php.
+#
+
+# Fixes for Ruby pre-1.9
+if RUBY_VERSION =~ /^1.[^9]/
+	#
+	# Ruby does not implement KeyError before 1.9
+	#
+	class KeyError < IndexError
+		def initialize message = nil
+			super message || "Key not found"
+		end
+	end
+end
 
 # == Description
 # Cpe is a small library built to simplify working with the Common Platform
@@ -80,7 +93,7 @@ class Cpe
 	def Cpe.parse cpe
 		raise ArgumentError unless cpe.kind_of? String or cpe.kind_of? File
 		cpe = cpe.read if cpe.kind_of? File
-		cpe.downcase!.chomp!
+		cpe = cpe.downcase.chomp
 		raise ArgumentError, "CPE malformed" unless /^cpe:\/[hoa]:/.match cpe and !/[\s\n]/.match cpe
 
 		data = Hash.new
