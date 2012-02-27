@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "cpe"
-  s.version = "0.1.1"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chris Wuest"]
-  s.date = "2012-02-24"
+  s.date = "2012-02-27"
   s.description = "Library for parsing and generating Common Platform Enumeration strings (see http://cpe.mitre.org/)"
   s.email = "chris@chriswuest.com"
   s.extra_rdoc_files = [
@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
     "VERSION",
     "cpe.gemspec",
     "lib/cpe.rb",
+    "test/cpe-test-invalid",
+    "test/cpe-test-valid",
     "test/helper.rb",
     "test/test_cpe.rb"
   ]
