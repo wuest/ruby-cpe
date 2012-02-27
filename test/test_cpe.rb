@@ -42,4 +42,11 @@ class TestCpe < Test::Unit::TestCase
 		assert_raises(KeyError) { Cpe.new(:vendor => "redhat").generate }
 		assert_nothing_raised { Cpe.new(:vendor => "redhat", :part => Cpe::OS).generate }
 	end
+
+	def test_equality
+		cpe_a = Cpe.new :part => Cpe::OS, :vendor => "redhat", :product => "enterprise_linux", :version => 3
+		cpe_b = Cpe.parse "cpe:/o:redhat:enterprise_linux:3"
+
+		assert_equal cpe_a, cpe_b
+	end
 end

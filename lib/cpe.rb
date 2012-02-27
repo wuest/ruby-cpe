@@ -64,6 +64,13 @@ class Cpe
 		return ["cpe", @part, @vendor, @product, @version, @update, @edition, @language].join(":").downcase
 	end
 
+	# 
+	# Test for equality of generated CPE strings
+	def == cpe
+		raise ArgumentError unless cpe.kind_of? Cpe
+		self.generate == cpe.generate
+	end
+
 	#
 	# Parse pre-existing CPE string and return new Cpe object
 	#
