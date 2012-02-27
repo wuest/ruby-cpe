@@ -34,6 +34,9 @@ class TestCpe < Test::Unit::TestCase
 		cpe = Cpe.new :part => Cpe::Hardware, :vendor => "cisco", :product => "router", :version => 3825
 		assert_equal cpe.generate, "cpe:/h:cisco:router:3825:::"
 
+		assert_nothing_raised { Cpe.parse File.open('test/cpe-test-valid') }
+		assert_raises(ArgumentError) { Cpe.parse File.open('test/cpe-test-invalid') }
+
 		assert_raises(ArgumentError) { Cpe.new :part => 2 }
 		assert_nothing_raised { Cpe.new }
 
@@ -46,7 +49,9 @@ class TestCpe < Test::Unit::TestCase
 	def test_equality
 		cpe_a = Cpe.new :part => Cpe::OS, :vendor => "redhat", :product => "enterprise_linux", :version => 3
 		cpe_b = Cpe.parse "cpe:/o:redhat:enterprise_linux:3"
+		cpe_c = Cpe.parse File.open('test/cpe-test-valid')
 
 		assert_equal cpe_a, cpe_b
+		assert_equal cpe_a, cpe_c
 	end
 end

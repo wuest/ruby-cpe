@@ -74,16 +74,14 @@ class Cpe
 	#
 	# Parse pre-existing CPE string and return new Cpe object
 	#
-	# String parsing is permissive regarding the number of trailing colons
+	# String parsing is permissive regarding the number of trailing colons and whitespace
 	# provided, filling in empty strings if needed.
 	#
-	# === Bugs
-	#
-	# * Presently unable to pass File object as input
-	#
 	def Cpe.parse cpe
-		raise ArgumentError unless cpe.kind_of? String
-		raise ArgumentError, "CPE malformed" unless /^cpe:\/[hoa]:/.match cpe and !/ /.match cpe
+		raise ArgumentError unless cpe.kind_of? String or cpe.kind_of? File
+		cpe = cpe.read if cpe.kind_of? File
+		cpe.downcase!.chomp!
+		raise ArgumentError, "CPE malformed" unless /^cpe:\/[hoa]:/.match cpe and !/[\s\n]/.match cpe
 
 		data = Hash.new
 		discard, data[:part], data[:vendor], data[:product], data[:version],
