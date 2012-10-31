@@ -129,4 +129,6 @@ class CPE
 
     return self.new data
   end
+
+  alias :to_s :generate
 end
